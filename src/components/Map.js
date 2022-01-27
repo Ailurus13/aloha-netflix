@@ -1,22 +1,20 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
-export function Map({ className }) {
-  const position = [51.505, -0.09];
-
+export function Map({ waypoint, className }) {
   return (
     <div className={className}>
       <MapContainer
         style={{ height: "100%", width: "100%" }}
-        center={position}
-        zoom={13}
+        center={[32.42, -90.13]}
+        zoom={3}
         scrollWheelZoom={false}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <Marker position={position}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
+        {waypoint && (
+          <Marker position={[waypoint.lat, waypoint.lng]}>
+            <Popup>{waypoint.label}</Popup>
+          </Marker>
+        )}
       </MapContainer>
     </div>
   );

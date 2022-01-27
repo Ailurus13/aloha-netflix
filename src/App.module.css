@@ -50,10 +50,14 @@
   .container {
     grid-template-areas:
       "title title title title title"
-      "video video video video video"
       "chapters chapters chapters chapters chapters"
-      "map map map map map"
+      "video video video video video"
       "keywords keywords keywords keywords keywords"
+      "map map map map map"
       "chatroom chatroom chatroom chatroom chatroom";
+  }
+
+  .map {
+    height: 40vh;
   }
 }

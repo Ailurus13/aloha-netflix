@@ -4,16 +4,16 @@ import { useState } from "react";
 import { Chapters } from "./components/Chapters";
 import { Keywords } from "./components/Keywords";
 import { Map } from "./components/Map";
-import styles from "./App.module.css";
 import { Chatroom } from "./components/Chatroom";
+import styles from "./App.module.css";
 
 function App() {
   const [startTime, setStartTime] = useState(0);
-
   const [chapters, setChapters] = useState([]);
-
   const [allKeywords, setAllKeywords] = useState([]);
   const [currentKeywords, setCurrentKeywords] = useState([]);
+  const [allWaypoints, setAllWaypoints] = useState([]);
+  const [currentWaypoint, setCurrentWaypoint] = useState();
 
   useEffect(() => {
     const loadData = async () => {
@@ -21,6 +21,7 @@ function App() {
       const data = await response.json();
       setChapters(data.Chapters);
       setAllKeywords(data.Keywords);
+      setAllWaypoints(data.Waypoints);
     };
 
     // Load data on mount
@@ -28,6 +29,13 @@ function App() {
   }, []);
 
   const onTimeUpdate = (time) => {
+    // Regarde quel waypoint afficher
+    for (const waypoint of allWaypoints) {
+      if (waypoint.timestamp <= time) {
+        setCurrentWaypoint(waypoint);
+      }
+    }
+
     // Regarde quel keywords afficher
     for (const keywords of allKeywords) {
       if (keywords.pos <= time) {
@@ -56,7 +64,7 @@ function App() {
         chapters={chapters}
       />
       <Keywords keywords={currentKeywords} className={styles.keywords} />
-      <Map className={styles.map} />
+      <Map className={styles.map} waypoint={currentWaypoint} />
     </div>
   );
 }
