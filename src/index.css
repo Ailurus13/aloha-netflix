@@ -1,5 +1,9 @@
 /* Global CSS */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   height: 100vh;
   margin: 0;
@@ -7,4 +11,53 @@ body {
 
 #root {
   height: 100%;
+}
+
+#video {
+  grid-area: video;
+}
+
+#title {
+  grid-area: title;
+}
+
+#keywords {
+  grid-area: keywords;
+}
+
+#chatroom {
+  grid-area: chatroom;
+}
+
+#map {
+  grid-area: map;
+}
+
+#chapters {
+  grid-area: chapters;
+}
+
+#container {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: 8vh 42vh 42vh 8vh;
+  grid-template-areas:
+    "title title title title title"
+    "chapters video video video chatroom"
+    "map  video video video chatroom"
+    "map keywords keywords keywords chatroom";
+}
+
+@media only screen and (max-width: 600px) {
+  #container {
+    grid-template-rows: auto;
+    grid-template-areas:
+      "title title title title title"
+      "chapters chapters chapters chapters chapters"
+      "video video video video video"
+      "keywords keywords keywords keywords keywords"
+      "map map map map map"
+      "chatroom chatroom chatroom chatroom chatroom";
+  }
 }

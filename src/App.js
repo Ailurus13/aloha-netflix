@@ -1,17 +1,20 @@
-import { VideoPlayer } from "./components/VideoPlayer";
-import { useEffect } from "react/cjs/react.development";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Map } from "./components/Map";
 import { Chapters } from "./components/Chapters";
 import { Keywords } from "./components/Keywords";
-import { Map } from "./components/Map";
 import { Chatroom } from "./components/Chatroom";
-import styles from "./App.module.css";
+import { VideoPlayer } from "./components/VideoPlayer";
 
 function App() {
   const [startTime, setStartTime] = useState(0);
+  const [time, setTime] = useState(0);
+
+  const [film, setFilm] = useState();
   const [chapters, setChapters] = useState([]);
+
   const [allKeywords, setAllKeywords] = useState([]);
   const [currentKeywords, setCurrentKeywords] = useState([]);
+
   const [allWaypoints, setAllWaypoints] = useState([]);
   const [currentWaypoint, setCurrentWaypoint] = useState();
 
@@ -22,6 +25,7 @@ function App() {
       setChapters(data.Chapters);
       setAllKeywords(data.Keywords);
       setAllWaypoints(data.Waypoints);
+      setFilm(data.Film);
     };
 
     // Load data on mount
@@ -29,6 +33,8 @@ function App() {
   }, []);
 
   const onTimeUpdate = (time) => {
+    setTime(time);
+
     // Regarde quel waypoint afficher
     for (const waypoint of allWaypoints) {
       if (waypoint.timestamp <= time) {
@@ -45,26 +51,38 @@ function App() {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.title}>
-        <h1>Aloha Netflix</h1>
+    <div id="container">
+      <div id="title" className="flex justify-center">
+        <h1 className="text-xl font-bold self-center">{film?.title}</h1>
       </div>
       <VideoPlayer
+        id="video"
         startTime={startTime}
         onTimeUpdate={onTimeUpdate}
-        className={styles.video}
         src="https://ia600900.us.archive.org/32/items/Route_66_-_an_American_badDream/Route_66_-_an_American_badDream_512kb.mp4"
       />
-      <Chatroom className={styles.chatroom} />
+      <Chatroom
+        className="p-2"
+        id="chatroom"
+        moment={time}
+        onMessageClick={(message) => {
+          if (message.moment) {
+            setStartTime(message.moment);
+          }
+        }}
+      />
       <Chapters
-        className={styles.chapters}
+        id="chapters"
         onSelectChapter={(chapter) => {
           setStartTime(chapter.pos);
         }}
         chapters={chapters}
+        className="p-2"
       />
-      <Keywords keywords={currentKeywords} className={styles.keywords} />
-      <Map className={styles.map} waypoint={currentWaypoint} />
+      <div id="keywords" className="flex">
+        <Keywords className="self-center" keywords={currentKeywords} />
+      </div>
+      <Map id="map" waypoint={currentWaypoint} className="p-2" />
     </div>
   );
 }

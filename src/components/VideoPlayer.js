@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
-import { useState } from "react/cjs/react.development";
-import styles from "./VideoPlayer.module.css";
+import { useState } from "react";
 
 export function VideoPlayer({
+  id,
   src,
   startTime = 0,
   type = "video/mp4",
@@ -29,8 +29,8 @@ export function VideoPlayer({
   }, [videoRef, onTimeUpdate, startTime, lastStartTime]);
 
   return (
-    <div className={className}>
-      <video ref={videoRef} className={styles.video} controls>
+    <div id={id} className={className}>
+      <video ref={videoRef} className="h-full w-full" controls>
         <source src={src} type={type} />
       </video>
     </div>

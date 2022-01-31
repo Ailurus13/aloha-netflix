@@ -1,8 +1,8 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
-export function Map({ waypoint, className }) {
+export function Map({ waypoint, className, id }) {
   return (
-    <div className={className}>
+    <div id={id} className={className}>
       <MapContainer
         style={{ height: "100%", width: "100%" }}
         center={[32.42, -90.13]}

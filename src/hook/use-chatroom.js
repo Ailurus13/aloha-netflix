@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { useState } from "react/cjs/react.development";
+import { useState } from "react";
 
-export function useChatroom() {
+export function useChatroom(username) {
   const [ws, setWs] = useState();
   const [messages, setMessages] = useState([]);
 
@@ -19,9 +19,16 @@ export function useChatroom() {
     }
   }, [ws, messages]);
 
-  const sendMessage = (message) => {
+  const sendMessage = (message, moment) => {
+    if (!username) {
+      return;
+    }
+
     if (ws) {
-      const msgObject = { name: "Tristan", message };
+      const msgObject = { name: username, message };
+      if (moment) {
+        msgObject.moment = moment;
+      }
       ws.send(JSON.stringify(msgObject));
     }
   };

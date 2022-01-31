@@ -1,20 +1,26 @@
 function Chapter({ chapter, onClick }) {
-  return <button onClick={onClick}>{chapter.title}</button>;
+  return (
+    <button className="border-2 rounded" onClick={onClick}>
+      {chapter.title}
+    </button>
+  );
 }
 
-export function Chapters({ className, onSelectChapter, chapters = [] }) {
+export function Chapters({ id, className, onSelectChapter, chapters = [] }) {
   return (
-    <div className={className}>
-      <h2>Chapitres</h2>
-      {chapters.map((chapter, index) => (
-        <Chapter
-          key={index}
-          chapter={chapter}
-          onClick={() => {
-            onSelectChapter && onSelectChapter(chapter);
-          }}
-        />
-      ))}
+    <div id={id} className={`flex flex-col ${className}`}>
+      <h2 className="text-lg font-bold">Chapitres</h2>
+      <div className=" flex-1 flex flex-col gap-1 overflow-y-scroll">
+        {chapters.map((chapter, index) => (
+          <Chapter
+            key={index}
+            chapter={chapter}
+            onClick={() => {
+              onSelectChapter && onSelectChapter(chapter);
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 }
