@@ -60,4 +60,7 @@ body {
       "map map map map map"
       "chatroom chatroom chatroom chatroom chatroom";
   }
+  #map {
+    height: 40vh;
+  }
 }
