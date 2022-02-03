@@ -3,10 +3,13 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
+import { MessageProvider } from "./provider/Message";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <MessageProvider>
+      <App />
+    </MessageProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function useChatroom(username) {
   const [ws, setWs] = useState();
@@ -15,6 +14,11 @@ export function useChatroom(username) {
       ws.onmessage = (evt) => {
         const newMessages = JSON.parse(evt.data);
         setMessages([...messages, ...newMessages]);
+      };
+
+      ws.onclose = () => {
+        setMessages([]);
+        setWs(null);
       };
     }
   }, [ws, messages]);

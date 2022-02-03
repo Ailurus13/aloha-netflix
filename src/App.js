@@ -4,8 +4,11 @@ import { Chapters } from "./components/Chapters";
 import { Keywords } from "./components/Keywords";
 import { Chatroom } from "./components/Chatroom";
 import { VideoPlayer } from "./components/VideoPlayer";
+import { useMessage } from "./provider/Message";
 
 function App() {
+  const { display } = useMessage();
+
   const [startTime, setStartTime] = useState(0);
   const [time, setTime] = useState(0);
 
@@ -30,6 +33,14 @@ function App() {
 
     // Load data on mount
     loadData();
+  }, [display]);
+
+  useEffect(() => {
+    display(
+      "Attention, cette application a été réalisé pour les bonne connexions internet. Dans le cas contraire la vidéo ne charge pas et vous ne pourrez pas profiter. Bon visionnage !",
+      "warning"
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onTimeUpdate = (time) => {
