@@ -6,7 +6,7 @@ export function ChatroomControl({
   defaultName,
   onChangeName,
 }) {
-  const [name, setName] = useState();
+  const [name, setName] = useState("");
   const [message, setMessage] = useState("");
 
   const control = (
